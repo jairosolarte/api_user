@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+
+
+Route::resource('user', 'UsersController',['only' => ['index', 'store', 'update', 'destroy', 'show']]);
+
+Route::post('user/{id}/upload', 'UsersController@upload');
