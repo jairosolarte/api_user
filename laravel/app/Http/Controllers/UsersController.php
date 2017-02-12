@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use App\User;
 
 class UsersController extends Controller
@@ -15,7 +16,9 @@ class UsersController extends Controller
 	 */
 	public function index()
 	{
+	   
 	    return response()->json(User::all(), 200);
+	    
 	}
 
 
@@ -31,28 +34,29 @@ class UsersController extends Controller
             'name'      => 'required',
             'email'     => 'required|email|unique:users',
         ];
-        try {
-            $validator = \Validator::make($request->all(), $rules);
+        
+        $validator = \Validator::make($request->all(), $rules);
+        
+        if ($validator->fails()) {
             
-            if ($validator->fails()) {
-                return response()->json([
-                    'created' => false,
-                    'errors'  => $validator->errors()->all()
-                ],500);
-            }
+            Log::error('createUser '.json_encode($request->all()).' '.json_encode($validator->errors()->all()));
             
-            $user = new User; 
-            $user->name = trim($request->name); 
-            $user->email = trim($request->email);
-            $user->Image = trim($request->Image); 
-            $user->save();
-            return response()->json($user, 200);
-            
-        }catch (Exception $e) {
-            //\Log::info('Error creating user: '.$e);
-            
-            return response()->json(['created' => false,'errors'=>$e->getMessage()], 500);
+            return response()->json([
+                'created' => false,
+                'errors'  => $validator->errors()->all()
+            ],500);
+             
         }
+        
+        $user = new User; 
+        $user->name = trim($request->name); 
+        $user->email = trim($request->email);
+        $user->Image = trim($request->Image); 
+        $user->save();
+        Log::debug('createUser '.$user->toJson());
+        return response()->json($user, 200);
+            
+        
 
 	}
 
@@ -68,6 +72,7 @@ class UsersController extends Controller
 		$user=User::find($id);
 
 		if (!$user){
+		    Log::error('showUser '.json_encode(array("id"=>$id)));
 		    return response()->json(['errors'=>'Model not found'],404);
 		}
 		return response()->json($user,200);
@@ -84,6 +89,7 @@ class UsersController extends Controller
 		$user=User::find($id);
 
 		if (!$user){
+		    Log::error('updateUser '.json_encode(array("id"=>$id)));
 		    return response()->json(['errors'=>'Model not found'],404);
 		}
 		
@@ -92,26 +98,26 @@ class UsersController extends Controller
             'email'=> 'required|email|unique:users,email,'.$id,
         ];
         
-        try {
-            $validator = \Validator::make($request->all(), $rules);
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
             
-            if ($validator->fails()) {
-                return response()->json([
-                    'update' => false,
-                    'errors'  => $validator->errors()->all()
-                ],500);
-            }
+            Log::error('updateUser '.json_encode($request->all()).' '.json_encode($validator->errors()->all()));
+            return response()->json([
+                'update' => false,
+                'errors'  => $validator->errors()->all()
+            ],500);
             
-            
-            $user->name = trim($request->name); 
-            $user->email = trim($request->email);
-            $user->Image = trim($request->Image); 
-            $user->save();
-            return response()->json($user, 200);
-            
-        }catch (Exception $e) {
-            return response()->json(['update' => false,'errors'=>$e->getMessage()], 500);
         }
+        
+        Log::debug('updateUser '.$user->toJson());
+        
+        $user->name = trim($request->name); 
+        $user->email = trim($request->email);
+        $user->Image = trim($request->Image); 
+        $user->save();
+        
+        return response()->json($user, 200);
+            
 	}
 
 	/**
@@ -125,11 +131,12 @@ class UsersController extends Controller
 	    $user=User::find($id);
 
 		if (!$user){
+		    Log::error('deleteUser '.json_encode(array("id"=>$id)));
 		    return response()->json(['errors'=>'Model not found'],404);
 		}
 		
+		Log::debug('deleteUser '.$user->toJson());
 		$response = $user->delete(); 
-		
 		return response()->json($response,200);
 	}
 	
@@ -139,6 +146,7 @@ class UsersController extends Controller
 	    $user=User::find($id);
 
 		if (!$user){
+		    Log::error('deleteUser '.json_encode(array("id"=>$id)));
 		    return response()->json(['errors'=>'Model not found'],404);
 		}
 		
@@ -150,6 +158,8 @@ class UsersController extends Controller
             $validator = \Validator::make($request->all(), $rules);
                 
             if ($validator->fails()) {
+                Log::error('uploadImage '.json_encode($request->all()).' '.json_encode($validator->errors()->all()));
+                
                 return response()->json([
                     'upload' => false,
                     'errors'  => $validator->errors()->all()
@@ -161,8 +171,11 @@ class UsersController extends Controller
             $imageName = sha1(time().time()).".{$extension}";
             $file = $request->file('image')->move($directory, $imageName);
             
+            Log::debug('uploadImage '.$user->toJson());
+            
             $user->Image = url('image/'.$imageName);  
             $user->save(); 
+            
             return response()->json(url('image/'.$imageName), 200);
             
         }catch (Exception $e) {

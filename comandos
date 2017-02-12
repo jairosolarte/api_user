@@ -1,0 +1,4 @@
+jairosolarte:~/workspace (master) $ sudo bash
+jairosolarte:~/workspace (master) $ export PATH="~/.composer/vendor/bin:$PATH"
+jairosolarte:~/workspace (master) $ cd laravel/
+jairosolarte:~/workspace/laravel (master) $ phpunit
