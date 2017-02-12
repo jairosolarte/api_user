@@ -72,6 +72,12 @@ class UserControllerTest extends TestCase
             'email'=>''
             ])
             ->assertResponseStatus(500);
+            
+        $this->put('/api/user/12345677',[
+            'name'=>$user->name,
+            'email'=>''
+            ])
+            ->assertResponseStatus(404);    
     }
     
     public function testDeleteUser(){
@@ -81,7 +87,6 @@ class UserControllerTest extends TestCase
         
         $this->delete('/api/user/12345678')->assertResponseStatus(404);
     }
-    
     
     
 }
