@@ -105,36 +105,37 @@ Route::post('user/{id}/upload', 'UsersController@upload');
 ``` 
 ## Servicios
 
+El servicio se implemento en un servidor php `http://apiuser.edulink.co`
 ```
 Listado.
 Método : GET
 url: api/user
-ejemplo: https://api-user-jairosolarte.c9users.io/laravel/public/api/user
+ejemplo: http://apiuser.edulink.co/api/user
 
 Crear usuario.
 Método : POST
 url:api/user
-ejemplo: https://api-user-jairosolarte.c9users.io/laravel/public/api/user
+ejemplo: http://apiuser.edulink.co/api/user
 
 Obtener un usuarios específico.
 Método : GET
 url: api/user/{id} 
-ejemplo: https://api-user-jairosolarte.c9users.io/laravel/public/api/user/60 
+ejemplo: http://apiuser.edulink.co/api/user/60 
 
 Actualizar un usuarios específico.
 Método : PUT|PATCH
 url: api/user/{id}  
-ejemplo: https://api-user-jairosolarte.c9users.io/laravel/public/api/user/60  
+ejemplo: http://apiuser.edulink.co/api/user/60  
 
 Eliminar un usuarios específico.
 Método : DELETE
 url: api/user/{id} 
-ejemplo:https://api-user-jairosolarte.c9users.io/laravel/public/api/user/60 
+ejemplo:http://apiuser.edulink.co/api/user/60 
 	
 Cargar una Imagen a un usuario: 
 Método: POST
 url: api/user/{id}/upload
-ejemplo: https://api-user-jairosolarte.c9users.io/laravel/public/api/user/60/upload 
+ejemplo: http://apiuser.edulink.co/api/user/60/upload 
 ``` 
 ## Pruebas Unitarias. 
 
@@ -169,12 +170,28 @@ phpunit
 
 ![captura](https://cloud.githubusercontent.com/assets/6656250/22870444/5bc4ed70-f175-11e6-81c2-7f88dbca5213.JPG)
 
-Su resultado se lo observa en la siguiente pagina. 
+Su resultado se lo observa en la siguiente pagina. http://apiuser.edulink.co/unitTest/
 
 ![captura3](https://cloud.githubusercontent.com/assets/6656250/22870521/f6bf71d8-f175-11e6-92aa-657603c9817d.JPG)
 
-El que interesa en esta prueba es el cubrimiento de el archivo `UsersController.pho`
+El que interesa en esta prueba es el cubrimiento de el archivo `UsersController.pho` en la siguiente pagina http://apiuser.edulink.co/unitTest/Http/Controllers/UsersController.php.html
 
 ![captura4](https://cloud.githubusercontent.com/assets/6656250/22870592/8267ad5e-f176-11e6-973c-9bf1811b6700.JPG)
 
 Esta imagen muestra un cubrimiento del 100 % en los servicios menos en el serivicio de carga e Imgen donde por tiempo no se realizo prueba unitaria. 
+
+## Logs. 
+
+Laravel implementa Log segun el PSR-3 y los almacena `/laravel/storage/logs/laravel.log`
+
+este es un ejemplo al correr las pruebas unitarias.
+```
+[2017-02-13 03:46:41] testing.ERROR: showUser {"id":"1234567890"}  
+[2017-02-13 03:46:42] testing.DEBUG: createUser {"name":"Dr. Donavon Pouros II","email":"jairosolarte@ingenieros943.com","Image":"","id":257}  
+[2017-02-13 03:46:42] testing.ERROR: createUser {"name":"Dr. Donavon Pouros II","email":""} ["The email field is required."]  
+[2017-02-13 03:46:43] testing.DEBUG: updateUser {"id":258,"name":"Mr. Cody Skiles Jr.","email":"xavier.kilback@example.net","Image":"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/3\/3d\/LaravelLogo.png"}  
+[2017-02-13 03:46:44] testing.ERROR: updateUser {"name":"Mr. Cody Skiles Jr.","email":""} ["The email field is required."]  
+[2017-02-13 03:46:44] testing.ERROR: updateUser {"id":"12345677"}  
+[2017-02-13 03:46:45] testing.DEBUG: deleteUser {"id":259,"name":"Mr. Virgil Huel PhD","email":"ryan.adrain@example.com","Image":"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/3\/3d\/LaravelLogo.png"}  
+[2017-02-13 03:46:45] testing.ERROR: deleteUser {"id":"12345678"} 
+```
