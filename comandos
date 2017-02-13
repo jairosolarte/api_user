@@ -2,3 +2,72 @@ jairosolarte:~/workspace (master) $ sudo bash
 jairosolarte:~/workspace (master) $ export PATH="~/.composer/vendor/bin:$PATH"
 jairosolarte:~/workspace (master) $ cd laravel/
 jairosolarte:~/workspace/laravel (master) $ phpunit
+
+Actualizar php a 5.6
+	sudo add-apt-repository ppa:ondrej/php
+	sudo apt-get update
+sudo apt-get install libapache2-mod-php5.6
+	sudo a2dismod php5
+	sudo a2enmod php5.6
+Reiniciar apache2
+apt-get -y install php5.6 php5.6-mcrypt php5.6-mbstring php5.6-curl php5.6-cli php5.6-mysql php5.6-gd php5.6-intl php5.6-xsl php5.6-zip php5.6-dev
+
+
+
+Instalar laravel
+	composer global require "laravel/installer"
+export PATH="~/.composer/vendor/bin:$PATH"
+Application key [base64:8j7z5303NR22Gut3pqvxJSpB3ceAXnG3rCYzNa0OOSw=] set successfully.
+
+Instalar  Mysql
+	mysql-ctl start
+Instalar PHPMyAdmin
+	phpmyadmin-ctl install
+Crear Base de Datos
+	Crear base de datos statusapi
+Ejecutar Migraciones
+	php artisan migrate
+Instalar PHPUnit
+	composer global require "phpunit/phpunit=5.5.*"
+	composer require phpunit/php-code-coverage
+	export PATH="~/.composer/vendor/bin:$PATH"
+
+Instalar Servicio de Mail
+ composer require guzzlehttp/guzzle,
+Credenciales de servico de correo, mailtrap
+
+Crear aplicación
+Crear base de datos,
+Configurar conexión de base de datos
+Cambiar .env para las migraciones,
+Correr migraciones
+
+
+Pendings
+
+Change from email for configurable
+Instructions
+Download xdebug-2.5.0rc1.tgz
+Unpack the downloaded file with tar -xvzf xdebug-2.5.0rc1.tgz
+Run: cd xdebug-2.5.0rc1
+Run: phpize (See the FAQ if you don't have phpize5.6.
+As part of its output it should show:
+Configuring for:
+...
+Zend Module Api No:      20131226
+Zend Extension Api No:   220131226
+
+
+If it does not, you are using the wrong phpize. Please follow this FAQ entry and skip the next step.
+Run: ./configure --with-php-config=/usr/bin/php-config5.6
+Run: make
+Run: cp modules/xdebug.so /usr/lib/php/20131226
+Edit /home/ubuntu/workspace/php.ini and add the line
+zend_extension = /usr/lib/php/20131226/xdebug.so
+Restart the webserver
+
+
+Configuring for:
+PHP Api Version:         20121113
+Zend Module Api No:      20121212
+Zend Extension Api No:   220121212
