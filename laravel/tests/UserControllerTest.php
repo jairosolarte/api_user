@@ -8,7 +8,7 @@ class UserControllerTest extends TestCase
 {
     use DatabaseTransactions;
     
-    
+    /*Test list user*/
     public function testList()
     {
         
@@ -25,6 +25,7 @@ class UserControllerTest extends TestCase
         
     }
     
+    /*Test Display the specified user. */
     public function testShowUser(){
         
         $user = factory(App\User::class)->create();
@@ -38,6 +39,7 @@ class UserControllerTest extends TestCase
         $this->get('/api/user/1234567890')->assertResponseStatus(404);  
     }
     
+    /* Test  newly created user .*/
     public function testCreateUser(){
         
         $user = factory(App\User::class)->create();
@@ -56,7 +58,7 @@ class UserControllerTest extends TestCase
         
         
     }
-    
+    /* Test  newly update user .*/
     public function testUpdateUser(){
         
         $user = factory(App\User::class)->create();
@@ -80,6 +82,7 @@ class UserControllerTest extends TestCase
             ->assertResponseStatus(404);    
     }
     
+    /* Test  newly delete the specified user .*/
     public function testDeleteUser(){
         $user = factory(App\User::class)->create();
         

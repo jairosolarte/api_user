@@ -10,7 +10,7 @@ use App\User;
 class UsersController extends Controller
 {
     /**
-	 * Display a listing of the resource.
+	 * Display a listing of the user.
 	 *
 	 * @return Response
 	 */
@@ -23,7 +23,7 @@ class UsersController extends Controller
 
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a newly created user in storage.
 	 *
 	 * @return Response
 	 */
@@ -61,7 +61,7 @@ class UsersController extends Controller
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Display the specified user.
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -78,7 +78,7 @@ class UsersController extends Controller
 		return response()->json($user,200);
 	}
 	/**
-	 * Update the specified resource in storage.
+	 * Update the specified user in storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -121,7 +121,7 @@ class UsersController extends Controller
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remove the specified user from storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -140,6 +140,12 @@ class UsersController extends Controller
 		return response()->json($response,200);
 	}
 	
+	/**
+	 * Upload file user`s Image 
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
 	public function upload(Request $request, $id){
 	    
 	    
